@@ -9,12 +9,13 @@ export const shadowStyles = {
   shadowRadius: 9
 }
 
-export const textStyles = {
-  fontFamily: 'Avenir'
-}
-
 export const colors = {
   red: '#FF4040',
-  green: 'green'
+  blue: '#1D0438',
+  green: '#009874'
 }
 
+export const textStyles = {
+  fontFamily: 'Avenir',
+  color: colors.blue
+}
