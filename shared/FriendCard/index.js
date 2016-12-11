@@ -1,22 +1,9 @@
 import React, { Component, PropTypes } from 'react'
-import { View, Text, Image, ActivityIndicator, StyleSheet } from 'react-native'
+import { View, Text, Image } from 'react-native'
 import moment from 'moment'
 import styles from './styles'
 
 class FriendCard extends Component {
-
-  static propTypes = {
-    width: PropTypes.number,
-    lastContacted: PropTypes.instanceOf(Date),
-    avatar: (props, propName, componentName) => {
-      const val = props[propName]
-      if(!val || (!val.match(/^https?:\/\/.*/)
-          && !val.match(/^[\uD83C-\uDBFF\uDC00-\uDFFF]{2}$/))
-      ){
-        return Error(`Invalid avatar (must be url or emoji): ${val}`)
-      }
-    }
-  }
 
   render () {
     const textSettings = {
@@ -30,7 +17,7 @@ class FriendCard extends Component {
           height: (this.props.width * 1.56),
           width: this.props.width,
           ...this.props.style
-      }]}>
+        }]}>
         <View style={[styles.ribbon]}>
           <Text {...textSettings}
             style={[styles.text, styles.ribbonText]}>
@@ -38,21 +25,21 @@ class FriendCard extends Component {
           </Text>
         </View>
         <View style={{
-            height: this.props.width,
-            padding: (0.11*this.props.width)}}>
-            { this.props.avatar.length == 2
+          height: this.props.width,
+          padding: (0.11 * this.props.width)}}>
+          { this.props.avatar.length === 2
               ? <Text {...textSettings}
-                  minimumFontScale={0}
-                  style={[styles.text, styles.avatarEmoji]}>
-                  {this.props.avatar}
-                </Text>
+                minimumFontScale={0}
+                style={[styles.text, styles.avatarEmoji]}>
+                {this.props.avatar}
+              </Text>
               : <Image
-                  style={styles.avatarImage}
-                  source={{uri: this.props.avatar}} />
+                style={styles.avatarImage}
+                source={{uri: this.props.avatar}} />
             }
         </View>
         <View style={styles.nameContainer}>
-          <Text 
+          <Text
             {...textSettings}
             numberOfLines={2}
             style={[styles.text, styles.nameText]}>
@@ -61,6 +48,19 @@ class FriendCard extends Component {
         </View>
       </View>
     )
+  }
+}
+
+FriendCard.propTypes = {
+  width: PropTypes.number,
+  lastContacted: PropTypes.instanceOf(Date),
+  avatar: (props, propName, componentName) => {
+    const val = props[propName]
+    const urlRegex = /^https?:\/\/.*/
+    const emojiRegex = /^[\uD83C-\uDBFF\uDC00-\uDFFF]{2}$/
+    if (!val || !(val.match(urlRegex) || val.match(emojiRegex))) {
+      return Error(`Invalid avatar (must be url or emoji): ${val}`)
+    }
   }
 }
 

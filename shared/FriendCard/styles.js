@@ -23,7 +23,7 @@ export default StyleSheet.create({
     marginTop: 5
   },
   avatarEmoji: {
-    fontSize: 100,
+    fontSize: 100
   },
   avatarImage: {
     flex: 1,
