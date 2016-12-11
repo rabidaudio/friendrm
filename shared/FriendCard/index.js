@@ -1,10 +1,21 @@
-import React, { Component, PropTypes } from 'react'
+// @flow
+import React, { Component } from 'react'
 import { View, Text, Image } from 'react-native'
-import moment from 'moment'
+
 import styles from './styles'
-import { FriendType } from '../types'
+import Friend from '../../lib/models/Friend'
+import Rule from '../../lib/models/Rule'
+
+type Props = {
+  friend: Friend,
+  rule: Rule,
+  width: number,
+  style: any
+};
 
 class FriendCard extends Component {
+
+  props: Props
 
   render () {
     const textSettings = {
@@ -12,7 +23,7 @@ class FriendCard extends Component {
       minimumFontScale: 0.4,
       numberOfLines: 1
     }
-    const lastContacted = FriendType.lastContacted(this.props.friend)
+    console.log(this.props.friend)
     return (
       <View
         style={[styles.container, {
@@ -23,21 +34,21 @@ class FriendCard extends Component {
         <View style={[styles.ribbon]}>
           <Text {...textSettings}
             style={[styles.text, styles.ribbonText]}>
-            { lastContacted ? moment(lastContacted).fromNow() : 'Never' }
+            { this.props.friend.lastContactStringVia(this.props.rule.channel) }
           </Text>
         </View>
         <View style={{
           height: this.props.width,
           padding: (0.11 * this.props.width)}}>
-          { this.props.friend.avatar.length === 2
+          { this.props.friend.avatar.type === 'emoji'
               ? <Text {...textSettings}
                 minimumFontScale={0}
                 style={[styles.text, styles.avatarEmoji]}>
-                {this.props.friend.avatar}
+                {this.props.friend.avatar.value}
               </Text>
               : <Image
                 style={styles.avatarImage}
-                source={{uri: this.props.friend.avatar}} />
+                source={{uri: this.props.friend.avatar.value}} />
             }
         </View>
         <View style={styles.nameContainer}>
@@ -51,11 +62,6 @@ class FriendCard extends Component {
       </View>
     )
   }
-}
-
-FriendCard.propTypes = {
-  width: PropTypes.number,
-  friend: FriendType
 }
 
 export default FriendCard

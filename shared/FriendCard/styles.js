@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native'
 
-import { shadowStyles, colors } from '../globalStyles'
+import { shadowStyles, textStyles, colors } from '../globalStyles'
 
 export default StyleSheet.create({
   container: {
@@ -14,9 +14,9 @@ export default StyleSheet.create({
     borderTopRightRadius: 5
   },
   text: {
+    ...textStyles,
     flex: 1,
-    textAlign: 'center',
-    fontFamily: 'Avenir'
+    textAlign: 'center'
   },
   ribbonText: {
     fontSize: 14,

@@ -9,6 +9,10 @@ export const shadowStyles = {
   shadowRadius: 9
 }
 
+export const textStyles = {
+  fontFamily: 'Avenir'
+}
+
 export const colors = {
   red: '#FF4040'
 }
