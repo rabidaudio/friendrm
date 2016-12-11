@@ -14,6 +14,7 @@ export const textStyles = {
 }
 
 export const colors = {
-  red: '#FF4040'
+  red: '#FF4040',
+  green: 'green'
 }
 

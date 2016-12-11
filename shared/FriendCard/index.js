@@ -15,7 +15,7 @@ type Props = {
 
 class FriendCard extends Component {
 
-  props: Props
+  props: Props;
 
   render () {
     const textSettings = {
@@ -23,32 +23,39 @@ class FriendCard extends Component {
       minimumFontScale: 0.4,
       numberOfLines: 1
     }
-    console.log(this.props.friend)
+    const width = this.props.width
+    const rule = this.props.rule
+    const channel = rule.channel
+    const friend = this.props.friend
+    const needsLove = rule.needsLove(friend)
     return (
       <View
         style={[styles.container, {
-          height: (this.props.width * 1.56),
-          width: this.props.width,
+          height: (width * 1.56),
+          width: width,
           ...this.props.style
         }]}>
-        <View style={[styles.ribbon]}>
+        <View style={[
+          styles.ribbon,
+          needsLove ? styles.ribbonNeedsLove : {}
+        ]}>
           <Text {...textSettings}
             style={[styles.text, styles.ribbonText]}>
-            { this.props.friend.lastContactStringVia(this.props.rule.channel) }
+            { friend.lastContactStringVia(channel) }
           </Text>
         </View>
         <View style={{
-          height: this.props.width,
-          padding: (0.11 * this.props.width)}}>
-          { this.props.friend.avatar.type === 'emoji'
+          height: width,
+          padding: (0.11 * width)}}>
+          { friend.avatar.type === 'emoji'
               ? <Text {...textSettings}
                 minimumFontScale={0}
                 style={[styles.text, styles.avatarEmoji]}>
-                {this.props.friend.avatar.value}
+                {friend.avatar.value}
               </Text>
               : <Image
                 style={styles.avatarImage}
-                source={{uri: this.props.friend.avatar.value}} />
+                source={{uri: friend.avatar.value}} />
             }
         </View>
         <View style={styles.nameContainer}>
@@ -56,7 +63,7 @@ class FriendCard extends Component {
             {...textSettings}
             numberOfLines={2}
             style={[styles.text, styles.nameText]}>
-            {this.props.friend.name}
+            {friend.name}
           </Text>
         </View>
       </View>

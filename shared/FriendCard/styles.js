@@ -9,9 +9,12 @@ export default StyleSheet.create({
   },
   ribbon: {
     flex: 2,
-    backgroundColor: colors.red,
+    backgroundColor: colors.green,
     borderTopLeftRadius: 5,
     borderTopRightRadius: 5
+  },
+  ribbonNeedsLove: {
+    backgroundColor: colors.red
   },
   text: {
     ...textStyles,

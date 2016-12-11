@@ -11,13 +11,14 @@ import Contact from './lib/models/Contact'
 export default class FriendRM extends Component {
 
   render () {
-    let john = new Friend({
+    const john = new Friend({
       name: 'John Smith',
       avatar: 'https://www.gravatar.com/avatar/e3f99640d60577f72086b54087423593.png?s=200',
       contacts: []
     })
     john.contacts.push(new Contact({
-      timestamp: new Date(2016, 10, 18),
+      timestamp: new Date(2016, 11, 8),
+      // timestamp: new Date(2016, 10, 8),
       channel: 'text',
       friend: john
     }))
@@ -26,7 +27,7 @@ export default class FriendRM extends Component {
       channel: 'call',
       friend: john
     }))
-    let niko = new Friend({
+    const niko = new Friend({
       name: 'Nikolaos Papanikolopoulos',
       avatar: '💩',
       contacts: []
