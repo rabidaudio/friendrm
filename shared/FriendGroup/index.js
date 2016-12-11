@@ -3,39 +3,21 @@ import React, { Component } from 'react'
 import { View, Text, ScrollView } from 'react-native'
 
 import FriendCard from '../FriendCard'
-import Friend, { sortByChannel } from '../../lib/models/Friend'
-import Rule from '../../lib/models/Rule'
+import Friend from '../../lib/models/Friend'
+import type { Group } from '../../lib/models/State'
 import styles from './styles'
 
 type Props = {
-  rule: Rule,
-  friends: [Friend],
-  style: any
+  group: Group,
+  style: Object
 };
-
-type GroupedFriends = [Friend[], Friend[]];
-
-function sortFriends (rule: Rule, friends: Friend[]): GroupedFriends {
-  let acc: GroupedFriends = [[], []]
-  for (const friend of friends) {
-    if (rule.needsLove(friend)) {
-      acc[0].push(friend)
-    } else {
-      acc[1].push(friend)
-    }
-  }
-  return acc
-}
 
 class FriendGroup extends Component {
 
   props: Props;
 
   render () {
-    const rule = this.props.rule
-    const channel = rule.channel
-    const sortedFriends = this.props.friends.sort(sortByChannel(channel))
-    const [friendsInNeed, friendsInDeed] = sortFriends(rule, sortedFriends)
+    const {rule, friendsInNeed, friendsInDeed} = this.props.group
     const needSeparator = friendsInNeed.length > 0 && friendsInDeed.length > 0
 
     function createCard (friend: Friend): any {
