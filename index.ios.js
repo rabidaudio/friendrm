@@ -1,6 +1,7 @@
 // @flow
 import React, { Component } from 'react'
-import { AppRegistry, ScrollView, Navigator, Text } from 'react-native'
+import { ScrollView, Text } from 'react-native'
+import { Navigation } from 'react-native-navigation'
 
 import FriendGroup from './shared/FriendGroup'
 
@@ -8,6 +9,7 @@ import Friend from './lib/models/Friend'
 import Rule from './lib/models/Rule'
 import Contact from './lib/models/Contact'
 import type {State} from './lib/models/State'
+import {navigationStyles} from './shared/globalStyles'
 
 const textEveryTwoWeeks = new Rule({id: 1, channel: 'text', frequency: 14})
 
@@ -58,40 +60,64 @@ function getFriendsForRule (rule: Rule): Friend[] {
   })
 }
 
-export default class FriendRM extends Component {
+export class Home extends Component {
+
+  constructor (props) {
+    super(props)
+    this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this))
+  }
+
+  onNavigatorEvent (event) {
+    if (event.type == 'NavBarButtonPress' && event.id == 'add') {
+      this.goToAddFriend()
+    }
+  }
+
+  goToAddFriend () {
+    // this.props.navigator.push({
+    //   screen: 'example.ScreenThree', // unique ID registered with Navigation.registerScreen
+    //   title: undefined, // navigation bar title of the pushed screen (optional)
+    //   titleImage: require('../../img/my_image.png'), //navigation bar title image instead of the title text of the pushed screen (optional)
+    //   passProps: {}, // simple serializable object that will pass as props to the pushed screen (optional)
+    //   animated: true, // does the push have transition animation or does it happen immediately (optional)
+    //   backButtonTitle: undefined, // override the back button title (optional)
+    //   backButtonHidden: false, // hide the back button altogether (optional)
+    //   navigatorStyle: {}, // override the navigator style for the pushed screen (optional)
+    //   navigatorButtons: {} // override the nav buttons for the pushed screen (optional)
+    // })
+  }
 
   render () {
-    return <Navigator
-      initialRoute={{name: 'home'}}
-      renderScene={(route, navigator) => {
-        if (route.name === 'home') {
-          const groups = state.rules.map((rule) => {
-            const friendsForRule = getFriendsForRule(rule)
-            return (<FriendGroup
-              key={rule.id}
-              rule={rule}
-              friends={friendsForRule}
-              style={{marginTop: 40}} />)
-          })
-          return (<ScrollView>{groups}</ScrollView>)
-        }
-      }}
-      navigationBar={
-        <Navigator.NavigationBar
-          routeMapper={{
-            LeftButton: (route, navigator, index, navState) => {
-              return (<Text onPress={() => navigator.pop()}>Cancel</Text>)
-            },
-            RightButton: (route, navigator, index, navState) => {
-              return (<Text onPress={() => navigator.push({name: 'add-friend'})}>Add</Text>)
-            },
-            Title: (route, navigator, index, navState) => {
-              return (<Text>FriendRM</Text>)
-            }
-          }}
-          style={{backgroundColor: 'gray'}} />
-      } />
+    const groups = state.rules.map((rule) => {
+      const friendsForRule = getFriendsForRule(rule)
+      return (<FriendGroup
+        key={rule.id}
+        rule={rule}
+        friends={friendsForRule}
+        style={{marginTop: 40}} />)
+    })
+    return <ScrollView>{groups}</ScrollView>
   }
 }
 
-AppRegistry.registerComponent('FriendRM', () => FriendRM)
+Home.navigatorButtons = {
+  rightButtons: [
+    {
+      title: 'Add',
+      id: 'add'
+    }
+  ],
+  leftButtons: []
+}
+
+Navigation.registerComponent('Home', () => Home)
+
+Navigation.startSingleScreenApp({
+  screen: {
+    screen: 'Home',
+    title: 'FriendRM',
+    navigatorStyle: navigationStyles
+  },
+  passProps: {},
+  animationType: 'slide-down'
+});
