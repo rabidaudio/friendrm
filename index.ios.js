@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from 'react'
-import { AppRegistry, ScrollView } from 'react-native'
+import { AppRegistry, ScrollView, Navigator, Text } from 'react-native'
 
 import FriendGroup from './shared/FriendGroup'
 
@@ -61,15 +61,36 @@ function getFriendsForRule (rule: Rule): Friend[] {
 export default class FriendRM extends Component {
 
   render () {
-    const groups = state.rules.map((rule) => {
-      const friendsForRule = getFriendsForRule(rule)
-      return (<FriendGroup
-        key={rule.id}
-        rule={rule}
-        friends={friendsForRule}
-        style={{marginTop: 40}} />)
-    })
-    return (<ScrollView>{groups}</ScrollView>)
+    return <Navigator
+      initialRoute={{name: 'home'}}
+      renderScene={(route, navigator) => {
+        if (route.name === 'home') {
+          const groups = state.rules.map((rule) => {
+            const friendsForRule = getFriendsForRule(rule)
+            return (<FriendGroup
+              key={rule.id}
+              rule={rule}
+              friends={friendsForRule}
+              style={{marginTop: 40}} />)
+          })
+          return (<ScrollView>{groups}</ScrollView>)
+        }
+      }}
+      navigationBar={
+        <Navigator.NavigationBar
+          routeMapper={{
+            LeftButton: (route, navigator, index, navState) => {
+              return (<Text onPress={() => navigator.pop()}>Cancel</Text>)
+            },
+            RightButton: (route, navigator, index, navState) => {
+              return (<Text onPress={() => navigator.push({name: 'add-friend'})}>Add</Text>)
+            },
+            Title: (route, navigator, index, navState) => {
+              return (<Text>FriendRM</Text>)
+            }
+          }}
+          style={{backgroundColor: 'gray'}} />
+      } />
   }
 }
 
