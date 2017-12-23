@@ -1,0 +1,16 @@
+apply plugin: 'kotlin-platform-js'
+apply plugin: 'kotlinx-serialization'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile "org.jetbrains.kotlin:kotlin-stdlib-js:$kotlin_version"
+    compile "org.jetbrains.kotlinx:kotlinx-serialization-runtime-js:$serialization_version"
+    compile "com.soywiz:klock-js:0.2.0"
+
+    expectedBy project(":common")
+
+    testCompile "org.jetbrains.kotlin:kotlin-test-js:$kotlin_version"
+}
