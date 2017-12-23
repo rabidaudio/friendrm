@@ -1,9 +1,11 @@
 buildscript {
-    ext.kotlin_version = '1.2.10'
+    ext.kotlin_version = '1.2.10' //'1.2.20-eap-11' //'1.2.0-rc-84' //'1.2.20-eap-23' //'1.2.10'
     ext.serialization_version = '0.2'
     ext.dokka_version = '0.9.15'
 
     repositories {
+//        maven { url 'http://dl.bintray.com/kotlin/kotlin-eap-1.2' }
+//        maven { url 'https://dl.bintray.com/kotlin/kotlin-dev' }
         maven { url "https://kotlin.bintray.com/kotlinx" }
         maven { url 'https://maven.google.com' }
         jcenter()
@@ -12,6 +14,7 @@ buildscript {
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         classpath "org.jetbrains.dokka:dokka-gradle-plugin:$dokka_version"
         classpath "org.jetbrains.kotlinx:kotlinx-gradle-serialization-plugin:$serialization_version"
+        classpath 'org.flywaydb:flyway-gradle-plugin:3.2.1'
     }
 }
 

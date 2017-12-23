@@ -1,10 +1,5 @@
 apply plugin: 'kotlin-platform-common'
 apply plugin: 'kotlinx-serialization'
-apply plugin: 'org.jetbrains.dokka'
-
-repositories {
-    mavenCentral()
-}
 
 dependencies {
     compile "org.jetbrains.kotlin:kotlin-stdlib-common:$kotlin_version"

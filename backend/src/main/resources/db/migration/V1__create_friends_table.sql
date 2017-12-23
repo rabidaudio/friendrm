@@ -1,0 +1,5 @@
+CREATE TABLE friends (
+  id SERIAL NOT NULL PRIMARY KEY,
+  name VARCHAR NOT NULL,
+  avatar VARCHAR
+)

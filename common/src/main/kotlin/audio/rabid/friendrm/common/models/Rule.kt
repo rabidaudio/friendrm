@@ -1,3 +1,5 @@
+package audio.rabid.friendrm.common.models
+
 import kotlinx.serialization.Serializable
 
 /**

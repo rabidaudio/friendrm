@@ -1,7 +1,6 @@
-import kotlinx.serialization.Serializable
+package audio.rabid.friendrm.common.models
 
 /**
  * A model representing a mode of contact
  */
-@Serializable
 enum class Channel { text, call, message, inperson }
